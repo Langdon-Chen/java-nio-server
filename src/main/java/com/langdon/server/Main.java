@@ -7,8 +7,9 @@ public class Main  {
     public static void main(String[] args) throws Exception{
         Reactor reactor = new Reactor(8080);
 
-        ExecutorService workerPool =  Executors.newFixedThreadPool(16);
-        workerPool.submit(reactor);
+        new Thread(reactor).start();
+//        ExecutorService workerPool =  Executors.newFixedThreadPool(16);
+//        workerPool.submit(reactor);
 
     }
 }

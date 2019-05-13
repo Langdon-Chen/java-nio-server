@@ -32,11 +32,22 @@ public class MessageBuffer {
             if (!enlargeBuffer())
                 return false;
         }
+        length +=  readyToRead.length ;
         return true;
     }
 
     public byte[] getBuffer() {
         return buffer;
+    }
+
+    /**
+     * get valid bytes that has read ;
+     * @return
+     */
+    public byte[] getBytesHasRead(){
+        byte [] bytesHasRead = new byte[length];
+        System.arraycopy(this.buffer,0,bytesHasRead,0,this.length);
+        return bytesHasRead;
     }
 
     private boolean enlargeBuffer(){

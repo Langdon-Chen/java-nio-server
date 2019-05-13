@@ -41,12 +41,16 @@ public class Reactor implements Runnable {
     public void run() {
         try{
             while (!Thread.interrupted()){
+                log.info("selector " + selector + " is selecting !");
                 if (selector.select() > 0 ){// get the ready socketKeys
                     Set<SelectionKey> selectedKeys = selector.selectedKeys();
-                    Iterator it = selectedKeys.iterator();
+                    Iterator<SelectionKey> it = selectedKeys.iterator();
+                    log.info("selector " + selector + " has select some keys !");
                     while (it.hasNext()){
-                        dispatch((SelectionKey) it);
-//                        it.remove();  // FIXME 需要吗？
+                        SelectionKey key = it.next();
+                        dispatch(key);
+
+//                        it.remove();  // FIXME 需要吗？ 差不多
                     }
                     selectedKeys.clear();
                 }
@@ -56,7 +60,7 @@ public class Reactor implements Runnable {
         }
     }
     private void dispatch(SelectionKey k) {
-//        System.out.println(2);
+        log.info("selector " + selector + " is dispatching key " + k + " !");
         Runnable r = (Runnable)(k.attachment()); // 在 Acceptor.handler 处进行 attach
         if (r != null)
             r.run();
@@ -68,9 +72,7 @@ public class Reactor implements Runnable {
                 SocketChannel socketChannel = serverSocket.accept();
                 // In non-blocking mode the accept() method returns immediately, and may thus return null, if no incoming connection had arrived.
                 if (socketChannel != null){
-                    if (socketChannel.isConnected()){
-                        log.info(socketChannel + " has connected");
-                    }
+                    log.info(socketChannel + " has connected");
                     new Handler(selector,socketChannel); // 注册Channel到Selector
                 }
             }catch (IOException ex){
