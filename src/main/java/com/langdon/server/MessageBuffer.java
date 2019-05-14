@@ -12,7 +12,7 @@ public class MessageBuffer {
     private static final int CAPACITY_MAX = 10 * MB; // the max size per request
 
     private int length = 0;
-    private int capacity = CAPACITY_LARGE;
+    private int capacity = CAPACITY_SMALL;
     private byte[] buffer ;
 
 
@@ -26,13 +26,14 @@ public class MessageBuffer {
      * @return false : to byteBuffer is larger than 10MB , server refuse the request
      */
     public boolean writeIntoBuffer(ByteBuffer byteBuffer){
-        byte[] readyToRead = new byte[byteBuffer.remaining()];
-        byteBuffer.get(readyToRead);
-        if (length + readyToRead.length >= capacity){
+        byte[] bytes = new byte[byteBuffer.remaining()];
+        byteBuffer.get(bytes);
+        if (this.length + bytes.length >= capacity){
             if (!enlargeBuffer())
                 return false;
         }
-        length +=  readyToRead.length ;
+        System.arraycopy(bytes,0,this.buffer,this.length,bytes.length);
+        this.length +=  bytes.length ;
         return true;
     }
 
@@ -40,6 +41,9 @@ public class MessageBuffer {
         return buffer;
     }
 
+    public int getLength(){
+        return length;
+    }
     /**
      * get valid bytes that has read ;
      * @return

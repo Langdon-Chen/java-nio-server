@@ -19,17 +19,19 @@ public class Reactor implements Runnable {
 
     private final Selector selector;
     private final ServerSocketChannel serverSocket;
+    private final IMessageReader messageReader;
+    private final IMessageWriter messageWriter;
 
-    Reactor(int port) throws IOException{
+    Reactor(int port , IMessageReader messageReader ,IMessageWriter messageWriter) throws IOException{
         selector = Selector.open();
         serverSocket = ServerSocketChannel.open();
         serverSocket.socket().bind(
                 new InetSocketAddress(port)
         );
         serverSocket.configureBlocking(false);
-        // socketChannel + selector = selectionKey ; socketChannel ~= socket ;
-        // socketChannel includes the inputStream , 交给 thread 处理
         SelectionKey sk = serverSocket.register(selector,SelectionKey.OP_ACCEPT); // 接受链接
+        this.messageReader = messageReader;
+        this.messageWriter = messageWriter;
         sk.attach(new Acceptor());
         log.info("server listening on port : "+ port);
         log.info("server SelectionKey : " + sk);
@@ -45,11 +47,9 @@ public class Reactor implements Runnable {
                 if (selector.select() > 0 ){// get the ready socketKeys
                     Set<SelectionKey> selectedKeys = selector.selectedKeys();
                     Iterator<SelectionKey> it = selectedKeys.iterator();
-                    log.info("selector " + selector + " has select some keys !");
                     while (it.hasNext()){
                         SelectionKey key = it.next();
                         dispatch(key);
-
 //                        it.remove();  // FIXME 需要吗？ 差不多
                     }
                     selectedKeys.clear();
@@ -73,7 +73,7 @@ public class Reactor implements Runnable {
                 // In non-blocking mode the accept() method returns immediately, and may thus return null, if no incoming connection had arrived.
                 if (socketChannel != null){
                     log.info(socketChannel + " has connected");
-                    new Handler(selector,socketChannel); // 注册Channel到Selector
+                    new Handler(selector,socketChannel,messageReader,messageWriter); // 注册Channel到Selector
                 }
             }catch (IOException ex){
                 ex.printStackTrace();
