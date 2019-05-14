@@ -32,6 +32,7 @@ public class Handler implements Runnable{
         selectionKey.interestOps(SelectionKey.OP_READ); // selector 根据 interest 来 selector the ready keys
         messageBuffer = new MessageBuffer();
         //这里必须先唤醒read_Sel，然后加锁，防止读写线程的中select方法再次锁定
+
         selector.wakeup();
     }
 
