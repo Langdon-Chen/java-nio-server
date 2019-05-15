@@ -2,10 +2,12 @@ package com.langdon.http;
 
 import com.langdon.server.Handler;
 import com.langdon.server.IMessageWriter;
+import com.langdon.server.MessageBuffer;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.channels.SocketChannel;
 
 public class HttpMessageWriter implements IMessageWriter {
 
@@ -16,20 +18,14 @@ public class HttpMessageWriter implements IMessageWriter {
     }
 
     @Override
-    public void write(Handler handler) throws IOException {
-        // todo 根据 content-length 判断当前message是否已经读完了；读完了就开始回复 ; 现在已经读完了
-        // check
-        byte[] src = handler.messageBuffer.getBytesHasRead();
-        String str = new String(src);
-//        System.out.println(str);
+    public boolean write(SocketChannel socketChannel , MessageBuffer messageBuffer) throws IOException {
+        if (!messageBuffer.hasMessage())
+            return false;
+
+        byte[] src = messageBuffer.getBytesHasRead();
         InputStream in = new ByteArrayInputStream(src);
-        // 根据 content-length 来解析，仅解析在content-length以内的内容；
-        // 如果读取到的body 长度少于 content-length ， response400
-//        ServerHttpRequest httpRequest = httpParser.parse(in);
-//        if (httpRequest != null){
-//            // send response
-//        }else {
-//            // error ;
-//        }
+        ServerHttpRequest httpRequest = httpParser.parse(in);
+        System.out.println(httpRequest.toString());
+        return true;
     }
 }

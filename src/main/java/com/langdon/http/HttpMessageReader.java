@@ -1,44 +1,47 @@
 package com.langdon.http;
 
-import com.langdon.server.Handler;
 import com.langdon.server.IMessageReader;
+import com.langdon.server.MessageBuffer;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
 
 public class HttpMessageReader implements IMessageReader {
 
     public static final int MAX_IN = 1024 ; // the max bytes each time to read
 
     @Override
-    public void read(Handler handler) throws IOException , OutOfMemoryError {
+    public boolean read(SocketChannel socketChannel , MessageBuffer messageBuffer) throws IOException , OutOfMemoryError {
+        boolean res  = false;
         ByteBuffer readByteBuffer  = ByteBuffer.allocate(MAX_IN);
-        int bytesRead = handler.read(readByteBuffer);
+        int bytesRead = socketChannel.read(readByteBuffer);
         int totalBytesRead = bytesRead;
         while(bytesRead > 0){
-            bytesRead = handler.read(readByteBuffer); // return 0 if byteBuffer is full.
+            bytesRead = socketChannel.read(readByteBuffer); // return 0 if byteBuffer is full.
             totalBytesRead += bytesRead;
         }
         if(bytesRead == -1){
-            handler.setStreamHasEnded(true);
+            res = true;
         }
         if(totalBytesRead > 0 ){ // bytesRead == 0 || bytesRead == -1
             readByteBuffer.flip(); // set position to 0 , make ready for being read
-            if (! handler.messageBuffer.writeIntoBuffer(readByteBuffer)){ // 缓存时自动扩容
+            if (! messageBuffer.writeIntoBuffer(readByteBuffer)){ // 缓存时自动扩容
                 throw new OutOfMemoryError("Request is larger than 10 MB ! Server has rejected this request !");
             }
-            if (hasReadCompletely(handler.messageBuffer.getBuffer(),handler.messageBuffer.getLength())){
-//                System.out.println(new String(handler.messageBuffer.getBytesHasRead()));
-                handler.setStreamHasEnded(true);
+            if (hasReadCompletely(messageBuffer.getBuffer(),messageBuffer.getLength())){
+                System.out.println(new String(messageBuffer.getBytesHasRead()));
+                res = true;
             }
         }
+        return res ;
     }
     /**
      * for some request , they may would not auto close the inputStream . so we need to  check if  read completely
      * strategy : check if the request headers contain "content-length" . if so , then count the complete request's length and
      * compare it to what we have read .
      */
-    public boolean hasReadCompletely(byte[] src , int length) throws IOException {
+    private boolean hasReadCompletely(byte[] src , int length) throws IOException {
         // find if the HttpHeader has content-length and then check the body's length
         int endOfFirstLine = findCRLF(src,0,length);
         if (endOfFirstLine == -1)

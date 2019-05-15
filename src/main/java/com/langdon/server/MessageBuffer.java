@@ -2,6 +2,10 @@ package com.langdon.server;
 
 import java.nio.ByteBuffer;
 
+/**
+ * cache the partial bytes read from {@link java.nio.channels.SocketChannel}
+ * {@link java.nio.channels.spi.SelectorProvider#openSocketChannel openSocketChannel}
+ */
 public class MessageBuffer {
     public static int KB = 1024;
     public static int MB = 1024 * KB;
@@ -72,6 +76,10 @@ public class MessageBuffer {
         this.buffer = newBuffer;
         this.capacity = targetCapacity;
         return true;
+    }
+
+    public boolean hasMessage(){
+        return length > 0 ;
     }
 
     public void clear(){

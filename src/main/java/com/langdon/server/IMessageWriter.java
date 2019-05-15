@@ -1,8 +1,9 @@
 package com.langdon.server;
 
 import java.io.IOException;
+import java.nio.channels.SocketChannel;
 
 public interface IMessageWriter {
 
-    public void write(Handler handler)throws IOException;
+    public boolean write(SocketChannel socketChannel , MessageBuffer messageBuffer)throws IOException;
 }
