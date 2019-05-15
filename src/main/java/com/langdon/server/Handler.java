@@ -17,7 +17,7 @@ public class Handler implements Runnable{
     private int state = READING ;
     private boolean streamHasEnded = false;
 
-    private MessageBuffer messageBuffer;
+    public MessageBuffer messageBuffer;
     private IMessageReader messageReader ;
     private IMessageWriter messageWriter;
 
@@ -86,20 +86,10 @@ public class Handler implements Runnable{
         selectionKey.selector().wakeup();
     }
 
-    public boolean writeIntoBuffer(ByteBuffer byteBuffer){
-        return this.messageBuffer.writeIntoBuffer(byteBuffer);
-    }
-
-    /**
-     * get valid bytes that has read ;
-     * @return
-     */
-    public byte[] getBytesHasRead(){
-        return this.messageBuffer.getBytesHasRead();
-    }
 
     public void setStreamHasEnded(boolean ended){
         this.streamHasEnded = ended;
     }
+
 
 }

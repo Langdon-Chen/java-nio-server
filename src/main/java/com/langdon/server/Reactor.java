@@ -50,7 +50,7 @@ public class Reactor implements Runnable {
                     while (it.hasNext()){
                         SelectionKey key = it.next();
                         dispatch(key);
-//                        it.remove();  // FIXME 需要吗？ 差不多
+//                        it.remove();  // FIXME needed ?
                     }
                     selectedKeys.clear();
                 }

@@ -16,6 +16,7 @@ public class MessageBuffer {
     private byte[] buffer ;
 
 
+
     public  MessageBuffer(){
         buffer = new byte[capacity];
     }
@@ -69,6 +70,7 @@ public class MessageBuffer {
         System.arraycopy(this.buffer,0,newBuffer,0,this.length);
         this.clear();
         this.buffer = newBuffer;
+        this.capacity = targetCapacity;
         return true;
     }
 
