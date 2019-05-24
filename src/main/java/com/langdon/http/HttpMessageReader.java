@@ -30,7 +30,7 @@ public class HttpMessageReader implements IMessageReader {
                 throw new OutOfMemoryError("Request is larger than 10 MB ! Server has rejected this request !");
             }
             if (hasReadCompletely(messageBuffer.getBuffer(),messageBuffer.getLength())){
-                System.out.println(new String(messageBuffer.getBytesHasRead()));
+//                System.out.println(new String(messageBuffer.getBytesHasRead()));
                 res = true;
             }
         }

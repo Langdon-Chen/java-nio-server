@@ -33,9 +33,15 @@ public class Handler implements Runnable{
 
     public void run(){
         try {
-            if (this.messageReader.read(socketChannel,messageBuffer)){
-                this.messageWriter.write(socketChannel,messageBuffer);
-                this.close();
+//            if (this.messageReader.read(socketChannel,messageBuffer)){
+//                this.messageWriter.write(socketChannel,messageBuffer);
+//                this.close();
+//            }
+            boolean readComplete = this.messageReader.read(socketChannel,messageBuffer);
+            if (readComplete){
+                boolean readyToClose = this.messageWriter.write(socketChannel,messageBuffer);
+                if (readyToClose)
+                    close();
             }
         }catch (IOException | OutOfMemoryError ex){
             ex.printStackTrace();
