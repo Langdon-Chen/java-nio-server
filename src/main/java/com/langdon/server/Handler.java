@@ -36,15 +36,27 @@ public class Handler implements Runnable{
 
     public void run(){
         try {
-//            if (this.messageReader.read(socketChannel,messageBuffer)){
-//                this.messageWriter.write(socketChannel,messageBuffer);
-//                this.close();
-//            }
-            boolean readComplete = this.messageReader.read(socketChannel,messageBuffer);
-            if (readComplete){
-                boolean readyToClose = this.messageWriter.write(socketChannel,messageBuffer);
-                if (readyToClose)
+            final int readStatus = this.messageReader.read(socketChannel,messageBuffer);
+            switch (readStatus){
+                case MessageConst.READ_CHANNEL_END:
+                    this.messageWriter.write(socketChannel,null); // for bad request
                     close();
+                    break;
+                case MessageConst.READ_PART:
+                    break;
+                case MessageConst.READ_COMPLETE:
+                    final int writeStatus = this.messageWriter.write(socketChannel,messageBuffer);
+//                    switch (writeStatus){
+//                        case MessageConst.WRITE_COMPLETE:
+//                        case MessageConst.WRITE_ERROR:
+//                            close();
+//                            break;
+//                        case MessageConst.WATE_FOR_NEXT_ROUND:
+//                            reset();
+//                            break;
+//                    }
+//                    close();
+                    break;
             }
         }catch (IOException | OutOfMemoryError ex){
             ex.printStackTrace();
@@ -77,6 +89,9 @@ public class Handler implements Runnable{
         selectionKey.selector().wakeup();
     }
 
+    private void reset(){
+        this.messageBuffer.reset();
+    }
 
 
 }

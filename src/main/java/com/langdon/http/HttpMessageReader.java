@@ -1,8 +1,10 @@
 package com.langdon.http;
 
 import com.langdon.http.basic.HttpHeaders;
+import com.langdon.server.Handler;
 import com.langdon.server.IMessageReader;
 import com.langdon.server.MessageBuffer;
+import com.langdon.server.MessageConst;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -10,11 +12,19 @@ import java.nio.channels.SocketChannel;
 
 public class HttpMessageReader implements IMessageReader {
 
-    public static final int MAX_IN = 1024 ; // the max bytes each time to read
-
+    public static final int MAX_IN = 1024;
+    /**
+     *
+     * @param socketChannel the {@link java.nio.channels.SocketChannel} to read from
+     * @param messageBuffer a buffer {@link MessageBuffer} stored the message from socketChannel
+     * @return MessageConst.READ_PART (1) : read partial message , waite for next round .
+     * MessageConst.READ_CHANNEL_END (-1) : have reach the end of channel. respond bad request.
+     * MessageConst.READ_COMPLETE (1) : read complete message
+     * @throws IOException
+     */
     @Override
-    public boolean read(SocketChannel socketChannel , MessageBuffer messageBuffer) throws IOException , OutOfMemoryError {
-        boolean res  = false;
+    public int read(SocketChannel socketChannel , MessageBuffer messageBuffer) throws IOException , OutOfMemoryError {
+        int res  = MessageConst.READ_PART;
         ByteBuffer readByteBuffer  = ByteBuffer.allocate(MAX_IN);
         int bytesRead = socketChannel.read(readByteBuffer);
         int totalBytesRead = bytesRead;
@@ -23,7 +33,7 @@ public class HttpMessageReader implements IMessageReader {
             totalBytesRead += bytesRead;
         }
         if(bytesRead == -1){
-            res = true;
+            res = MessageConst.READ_CHANNEL_END;
         }
         if(totalBytesRead > 0 ){ // bytesRead == 0 || bytesRead == -1
             readByteBuffer.flip(); // set position to 0 , make ready for being read
@@ -32,7 +42,7 @@ public class HttpMessageReader implements IMessageReader {
             }
             if (hasReadCompletely(messageBuffer.getBuffer(),messageBuffer.getLength())){
                 System.out.println(new String(messageBuffer.getBytesHasRead()));
-                res = true;
+                res = MessageConst.READ_COMPLETE;
             }
         }
         return res ;

@@ -84,6 +84,16 @@ public class MessageBuffer {
 
     public void clear(){
         this.buffer = null;
+        length = 0;
+        capacity = CAPACITY_SMALL;
     }
+
+    public void reset(){
+        length = 0;
+        capacity = CAPACITY_SMALL;
+        buffer = null;
+        buffer = new byte[capacity];
+    }
+
 
 }
