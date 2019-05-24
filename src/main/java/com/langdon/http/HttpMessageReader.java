@@ -13,6 +13,7 @@ import java.nio.channels.SocketChannel;
 public class HttpMessageReader implements IMessageReader {
 
     public static final int MAX_IN = 1024;
+    private static int n = 0;
     /**
      *
      * @param socketChannel the {@link java.nio.channels.SocketChannel} to read from
@@ -24,6 +25,7 @@ public class HttpMessageReader implements IMessageReader {
      */
     @Override
     public int read(SocketChannel socketChannel , MessageBuffer messageBuffer) throws IOException , OutOfMemoryError {
+        n++;
         int res  = MessageConst.READ_PART;
         ByteBuffer readByteBuffer  = ByteBuffer.allocate(MAX_IN);
         int bytesRead = socketChannel.read(readByteBuffer);

@@ -33,7 +33,7 @@ public class MessageBuffer {
     public boolean writeIntoBuffer(ByteBuffer byteBuffer){
         byte[] bytes = new byte[byteBuffer.remaining()];
         byteBuffer.get(bytes);
-        if (this.length + bytes.length >= capacity){
+        while (this.length + bytes.length >= capacity){
             if (!enlargeBuffer())
                 return false;
         }
@@ -72,7 +72,6 @@ public class MessageBuffer {
     private boolean enlargeBuffer(int targetCapacity){
         byte[] newBuffer = new byte[targetCapacity];
         System.arraycopy(this.buffer,0,newBuffer,0,this.length);
-        this.clear();
         this.buffer = newBuffer;
         this.capacity = targetCapacity;
         return true;

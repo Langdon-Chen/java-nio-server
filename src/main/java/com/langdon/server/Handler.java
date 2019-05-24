@@ -46,16 +46,16 @@ public class Handler implements Runnable{
                     break;
                 case MessageConst.READ_COMPLETE:
                     final int writeStatus = this.messageWriter.write(socketChannel,messageBuffer);
-//                    switch (writeStatus){
-//                        case MessageConst.WRITE_COMPLETE:
-//                        case MessageConst.WRITE_ERROR:
-//                            close();
-//                            break;
-//                        case MessageConst.WATE_FOR_NEXT_ROUND:
-//                            reset();
-//                            break;
-//                    }
-//                    close();
+                    switch (writeStatus){
+                        case MessageConst.WRITE_COMPLETE:
+                        case MessageConst.WRITE_ERROR:
+                            close();
+                            break;
+                        case MessageConst.WATE_FOR_NEXT_ROUND:
+                            reset();
+                            break;
+                    }
+                    close();
                     break;
             }
         }catch (IOException | OutOfMemoryError ex){
@@ -77,7 +77,7 @@ public class Handler implements Runnable{
     }
 
     private void close(){
-        log.log(Level.FINEST,"SocketChannel has closed " + socketChannel);
+        log.log(Level.INFO,"SocketChannel has closed " + socketChannel);
         selectionKey.attach(null);
         selectionKey.cancel();
         try{
