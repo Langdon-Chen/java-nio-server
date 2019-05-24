@@ -19,7 +19,7 @@ public final class MessageConst {
 
     public static final int WRITE_COMPLETE = 0;
 
-    public static final int WATE_FOR_NEXT_ROUND = 1; // means keep alive in http
+    public static final int WAITE_FOR_NEXT_ROUND = 1; // means keep alive in http
 
     public static final int WRITE_ERROR = -1;
 }

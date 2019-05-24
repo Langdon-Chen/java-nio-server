@@ -51,7 +51,7 @@ public class Handler implements Runnable{
                         case MessageConst.WRITE_ERROR:
                             close();
                             break;
-                        case MessageConst.WATE_FOR_NEXT_ROUND:
+                        case MessageConst.WAITE_FOR_NEXT_ROUND:
                             reset();
                             break;
                     }

@@ -18,9 +18,10 @@ public class HttpMessageReader implements IMessageReader {
      *
      * @param socketChannel the {@link java.nio.channels.SocketChannel} to read from
      * @param messageBuffer a buffer {@link MessageBuffer} stored the message from socketChannel
-     * @return MessageConst.READ_PART (1) : read partial message , waite for next round .
-     * MessageConst.READ_CHANNEL_END (-1) : have reach the end of channel. respond bad request.
-     * MessageConst.READ_COMPLETE (1) : read complete message
+     * @return
+     *  {@link MessageConst#READ_PART} (1) : read partial message , waite for next round .
+     *  {@link MessageConst#READ_CHANNEL_END} (-1) : have reach the end of channel. respond bad request.
+     *  {@link MessageConst#READ_COMPLETE} (1) : read complete message
      * @throws IOException
      */
     @Override
@@ -54,7 +55,7 @@ public class HttpMessageReader implements IMessageReader {
      * strategy : check if the request headers contain "content-length" . if so , then count the complete request's length and
      * compare it to what we have read .
      */
-    private boolean hasReadCompletely(byte[] src , int length) throws IOException {
+    private boolean hasReadCompletely(byte[] src , int length){
         // find if the HttpHeader has content-length and then check the body's length
         int endOfFirstLine = findCRLF(src,0,length);
         if (endOfFirstLine == -1)
