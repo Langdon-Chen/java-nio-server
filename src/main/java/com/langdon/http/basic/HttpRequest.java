@@ -1,6 +1,4 @@
-package com.langdon.http;
-
-import java.util.Map;
+package com.langdon.http.basic;
 
 public interface HttpRequest extends HttpMessage{
 

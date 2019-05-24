@@ -8,6 +8,9 @@ import java.nio.channels.SocketChannel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * the handler behaves as socket
+ */
 public class Handler implements Runnable{
     private final Logger log = Logger.getLogger(getClass().getName());
     private final SocketChannel socketChannel ;

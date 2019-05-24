@@ -1,4 +1,4 @@
-package com.langdon.http;
+package com.langdon.http.basic;
 
 
 public interface HttpResponse extends HttpMessage {

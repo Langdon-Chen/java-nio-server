@@ -1,4 +1,6 @@
-package com.langdon.http;
+package com.langdon.http.basic;
+
+import com.langdon.http.AbstractHttpMessage;
 
 import java.util.Map;
 

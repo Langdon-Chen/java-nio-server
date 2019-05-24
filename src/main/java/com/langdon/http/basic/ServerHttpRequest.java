@@ -1,4 +1,6 @@
-package com.langdon.http;
+package com.langdon.http.basic;
+
+import com.langdon.http.AbstractHttpMessage;
 
 import java.util.Map;
 
@@ -55,6 +57,7 @@ public class ServerHttpRequest extends AbstractHttpMessage implements HttpReques
                     .append((char)Character.LINE_SEPARATOR);
         }
         sb.append((char)Character.LINE_SEPARATOR);
-        return getEntity()==null ? sb.toString() : sb.append(new String(getEntity())).toString();
+        return sb.toString();
+//        return getEntity()==null ? sb.toString() : sb.append(new String(getEntity())).toString();
     }
 }

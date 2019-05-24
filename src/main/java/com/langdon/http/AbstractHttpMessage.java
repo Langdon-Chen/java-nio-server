@@ -1,8 +1,11 @@
 package com.langdon.http;
 
+import com.langdon.http.basic.HttpMessage;
+import com.langdon.http.basic.HttpVersion;
+
 import java.util.Map;
 
-public abstract class AbstractHttpMessage implements HttpMessage{
+public abstract class AbstractHttpMessage implements HttpMessage {
 
     private HttpVersion version;
 

@@ -1,20 +1,18 @@
 package com.langdon.http;
 
+import com.langdon.http.basic.*;
 import com.langdon.server.IParser;
 import com.langdon.server.Protocol;
 
 import java.io.*;
 import java.net.ProtocolFamily;
 import java.net.StandardProtocolFamily;
-import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Logger;
 
-public  class HttpParser implements IParser<InputStream,HttpRequest> {
+public  class HttpParser implements IParser<InputStream, HttpRequest> {
 
     protected Logger log = Logger.getLogger(getClass().getName());
 

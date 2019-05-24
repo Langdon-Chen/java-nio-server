@@ -22,7 +22,7 @@ public class Reactor implements Runnable {
     private final IMessageReader messageReader;
     private final IMessageWriter messageWriter;
 
-    Reactor(int port , IMessageReader messageReader ,IMessageWriter messageWriter) throws IOException{
+    public Reactor(int port , IMessageReader messageReader ,IMessageWriter messageWriter) throws IOException{
         selector = Selector.open();
         serverSocket = ServerSocketChannel.open();
         serverSocket.socket().bind(

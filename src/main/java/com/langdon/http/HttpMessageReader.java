@@ -1,5 +1,6 @@
 package com.langdon.http;
 
+import com.langdon.http.basic.HttpHeaders;
 import com.langdon.server.IMessageReader;
 import com.langdon.server.MessageBuffer;
 
@@ -30,7 +31,7 @@ public class HttpMessageReader implements IMessageReader {
                 throw new OutOfMemoryError("Request is larger than 10 MB ! Server has rejected this request !");
             }
             if (hasReadCompletely(messageBuffer.getBuffer(),messageBuffer.getLength())){
-//                System.out.println(new String(messageBuffer.getBytesHasRead()));
+                System.out.println(new String(messageBuffer.getBytesHasRead()));
                 res = true;
             }
         }
@@ -81,8 +82,6 @@ public class HttpMessageReader implements IMessageReader {
      * @param start
      * @param end
      * @return {#HttpHeaders.CRLF} is \r\n  , return value is the index of \n
-     *  /r == 9
-     *  /n == 10
      */
     private static int findCRLF(byte[]src , int start ,int end ){
         for(int index = start; index < end; index++){

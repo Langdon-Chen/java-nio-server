@@ -1,4 +1,4 @@
-package com.langdon.http;
+package com.langdon.http.basic;
 
 public enum HttpMethod {
 	GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE;

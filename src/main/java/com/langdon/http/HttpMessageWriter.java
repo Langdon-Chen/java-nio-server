@@ -1,6 +1,6 @@
 package com.langdon.http;
 
-import com.langdon.server.Handler;
+import com.langdon.http.basic.ServerHttpRequest;
 import com.langdon.server.IMessageWriter;
 import com.langdon.server.MessageBuffer;
 
@@ -25,7 +25,7 @@ public class HttpMessageWriter implements IMessageWriter {
         byte[] src = messageBuffer.getBytesHasRead();
         InputStream in = new ByteArrayInputStream(src);
         ServerHttpRequest httpRequest = httpParser.parse(in);
-        System.out.println(httpRequest.toString());
+//        System.out.println(httpRequest.toString());
         return true;
     }
 }

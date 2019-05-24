@@ -1,4 +1,4 @@
-package com.langdon.http;
+package com.langdon.http.basic;
 
 public final class HttpHeaders {
 	public static final String CRLF = "\r\n";
