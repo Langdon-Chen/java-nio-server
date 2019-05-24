@@ -37,7 +37,7 @@ public  class HttpParser implements IParser<InputStream, HttpRequest> {
      * corresponding {@link ServerHttpRequest} object, which will be returned.
      *
      * @param inputStream The stream to read from.
-     * @return
+     * @return a raw request
      * @throws IOException
      */
     @Override

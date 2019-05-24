@@ -36,7 +36,6 @@ public class HttpMessageWriter implements IMessageWriter {
             return MessageConst.WRITE_ERROR;
         }
 
-
         byte[] src = messageBuffer.getBytesHasRead();
         InputStream in = new ByteArrayInputStream(src);
         ServerHttpRequest httpRequest = httpParser.parse(in);

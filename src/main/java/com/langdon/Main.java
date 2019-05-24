@@ -4,7 +4,11 @@ import com.langdon.http.HttpMessageReader;
 import com.langdon.http.HttpMessageWriter;
 import com.langdon.http.HttpParser;
 import com.langdon.server.Reactor;
+import org.apache.commons.fileupload.MultipartStream;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -16,62 +20,40 @@ public class Main  {
 
 //        ExecutorService workerPool =  Executors.newFixedThreadPool(16);
 //        workerPool.submit(reactor);
-
+//        byte [] boundary = "----WebKitFormBoundaryNDqJdQf4VJasYAKf".getBytes();
+//        InputStream inputStream = new ByteArrayInputStream(str.getBytes());
+//        MultipartStream multipartStream = new MultipartStream(inputStream, boundary,4096,null);
+//        boolean nextPart = multipartStream.skipPreamble();
+//        while (nextPart){
+//            String headersString = multipartStream.readHeaders();
+//            System.out.print(headersString);
+//            ByteArrayOutputStream data = new ByteArrayOutputStream();
+//            multipartStream.readBodyData(data);
+//            System.out.println(new String(data.toByteArray()));
+//            nextPart = multipartStream.readBoundary();
+//        }
 
     }
 
-    public static void  test() throws Exception{
-//        final HttpParser parser = new HttpParser();
-//        HttpMessageReader reader = new HttpMessageReader(parser);
-//        reader.hasReadCompletely(src.getBytes());
-    }
-
-    public static String src = "GET / HTTP/1.1\r\n" +
-            "Content-Type: text/plain\r\n" +
-            "User-Agent: PostmanRuntime/7.11.0\r\n" +
-            "Accept: */*\r\n" +
-            "Cache-Control: no-cache\n" +
-            "Postman-Token: 780df59c-339e-48ea-964f-b419b4b0a0d3\r\n" +
-            "Host: localhost:8080\n" +
-            "cookie: JSESSIONID=937888D24EC60E7BBBB2676FF7A105BF\r\n" +
-            "accept-encoding: gzip, deflate\r\n" +
-            "content-length: 5999\r\n" +
-            "Connection: keep-alive\r\n" +
+    public static final String str = "------WebKitFormBoundaryNDqJdQf4VJasYAKf\r\n" +
+            "Content-Disposition: form-data; name=\"fname\"\r\n" +
             "\r\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a very large body ;\n" +
-            "a";
+            "&#38472;\r\n" +
+            "------WebKitFormBoundaryNDqJdQf4VJasYAKf\r\n" +
+            "Content-Disposition: form-data; name=\"lname\"\r\n" +
+            "\r\n" +
+            "&#26223;&#27849;\r\n" +
+            "------WebKitFormBoundaryNDqJdQf4VJasYAKf\r\n" +
+            "Content-Disposition: form-data; name=\"file\"; filename=\"&#21151;&#33021;&#27169;&#22359;&#35774;&#35745;.md\"\r\n" +
+            "Content-Type: text/markdown\r\n" +
+            "\r\n" +
+            "| **功能子项** | **功能说明与阐述**                                           |\r\n" +
+            "| ------------ | ------------------------------------------------------------ |\r\n" +
+            "| 用户管理中心 | 管理中心主要是管理用户的权限和个人数据信息。对于普通用户，可以管理个人信息和项目。个人信息管理包括更新基本信息和修改密码，项目管理请看下文。对于系统管理员，还可以通过昵称，手机号和邮箱进行模糊查询出用户，并对用户的权限进行分配。 |\r\n" +
+            "\r\n" +
+            "------WebKitFormBoundaryNDqJdQf4VJasYAKf\r\n" +
+            "Content-Disposition: form-data; name=\"submit\"\r\n" +
+            "\r\n" +
+            "&#25552;&#20132;\r\n" +
+            "------WebKitFormBoundaryNDqJdQf4VJasYAKf--";
 }
