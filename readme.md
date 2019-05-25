@@ -2,7 +2,7 @@ English | [简体中文](./readme.zh-CN.md)
 
 <h1 align="center">Nio-Server in Java </h1>
 
-For the purpose of learning, I write a web server based on Java nio. It implements the HTTP protocol using the react mode. Not it only return the HTTP request message you sent. Based on my code, I believe you can implement any kind of application layer protocol.
+For the purpose of learning, I write a web server based on Java nio. It implements the HTTP protocol using the react mode. Now it can only return the HTTP request message you sent. Based on my code, I believe you can implement any kind of application layer protocol.
 ## Usage
 ```
 java -jar nio-server-1.0-SNAPSHOT-jar-with-dependencies.jar
