@@ -2,7 +2,7 @@ English | [简体中文](./readme.zh-CN.md)
 
 <h1 align="center">Nio-Server in Java </h1>
 
-For the purpose of learning, I write a web server based on Java nio. It implements the HTTP protocol using the react mode. Not it only return the HTTP request message you sent.
+For the purpose of learning, I write a web server based on Java nio. It implements the HTTP protocol using the react mode. Not it only return the HTTP request message you sent. Based on my code, I believe you can implement any kind of application layer protocol.
 ## Usage
 ```
 java -jar nio-server-1.0-SNAPSHOT-jar-with-dependencies.jar
@@ -12,7 +12,7 @@ Or
 java -jar nio-server-1.0-SNAPSHOT-jar-with-dependencies.jar yourPort 
 ```
 Default port is 8001.
-If you request `http://localhost:8001/` , you may get 
+If you request `http://localhost:8001/` in a browser , you may get 
 ```http request
 GET / HTTP/1.1
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
