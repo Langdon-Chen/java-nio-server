@@ -37,6 +37,10 @@ public class ServerHttpResponse extends AbstractHttpMessage implements HttpRespo
                     .append((char)Character.LINE_SEPARATOR)
                     .append((char)Character.LINE_SEPARATOR);
         }
-        return getEntity()==null ? sb.toString() : sb.append(new String(getEntity())).toString();
+        sb.append((char)Character.LINE_SEPARATOR);
+        if (getEntity()!=null){
+            sb.append(new String(getEntity()));
+        }
+        return sb.toString();
     }
 }

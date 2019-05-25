@@ -9,7 +9,13 @@ import com.langdon.server.MessageConst;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-
+/**
+ * The response from socketChannel.read(ByteBuffer)
+ * https://stackoverflow.com/questions/30428660/nio-socketchannel-saying-there-is-no-data-when-there-is-or-selector-is-not-info
+ * -1, indicating EOS, meaning you should close the channel
+ * zero, meaning there was no data to read, meaning you should return to the select() loop, and
+ * a positive value, meaning you have read that many bytes, which you should then extract and remove from the ByteBuffer (get()/compact()) before continuing.
+ */
 public class HttpMessageReader implements IMessageReader {
 
     public static final int MAX_IN = 1024;
@@ -44,7 +50,7 @@ public class HttpMessageReader implements IMessageReader {
                 throw new OutOfMemoryError("Request is larger than 10 MB ! Server has rejected this request !");
             }
             if (hasReadCompletely(messageBuffer.getBuffer(),messageBuffer.getLength())){
-                System.out.println(new String(messageBuffer.getBytesHasRead()));
+//                System.out.println(new String(messageBuffer.getBytesHasRead()));
                 res = MessageConst.READ_COMPLETE;
             }
         }

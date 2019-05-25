@@ -70,19 +70,7 @@ public  class HttpParser implements IParser<InputStream, HttpRequest> {
     }
 
     /**
-     * 在Postman 中 socketChannel.read(buffer) 第一次会返回 -1 ; 需要第二次链接 socketChannel
-     * n 有数据的时候返回读取到的字节数。
-     * 0 没有数据并且没有达到流的末端时返回0。
-     * -1 当达到流末端的时候返回-1。
-     // https://stackoverflow.com/questions/30428660/nio-socketchannel-saying-there-is-no-data-when-there-is-or-selector-is-not-info
-
-     * -1, indicating EOS, meaning you should close the channel
-     * zero, meaning there was no data to read, meaning you should return to the select() loop, and
-     * a positive value, meaning you have read that many bytes, which you should then extract and remove from the ByteBuffer (get()/compact()) before continuing.
-     */
-
-    /**
-     * 处理请求的URL，如果请求的资源存在，就把所访问的资源放在entity里面；
+     *
      * Creates an appropriate {@link ServerHttpResponse} to the given
      * {@link ServerHttpResponse}. Note however, that this method is not yet sending
      * the response.
@@ -98,9 +86,7 @@ public  class HttpParser implements IParser<InputStream, HttpRequest> {
         httpResponse.getHeaders().put(HttpHeaders.SERVER, "Langdon's NIO Http Server");
         httpResponse.getHeaders().put(HttpHeaders.DATE,new Date().toString());
         httpResponse.setVersion(request.getHttpVersion());
-        // MVC 模式
         httpResponse.setHttpStatus(HttpStatus.NOT_FOUND);
-        // todo 改用更优雅的返回方式
         byte[] fileContent = ("<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<head>\n" +
@@ -166,7 +152,7 @@ public  class HttpParser implements IParser<InputStream, HttpRequest> {
     }
 
     /**
-     * 读取inputstream；直到遇到了\r\n
+     *
      * A helper method that reads an InputStream until it reads a CRLF (\r\n\).
      * Everything in front of the linefeed occured is returned as String.
      *

@@ -59,7 +59,6 @@ public final class HttpHeaders {
 	public static final String USER_AGENT = "User-Agent";
 
 	private HttpHeaders() {
-		// 不允许外部实例化
 	}
 
 }

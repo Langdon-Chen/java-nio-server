@@ -44,4 +44,8 @@ public abstract class AbstractHttpMessage implements HttpMessage {
         this.headers = headers;
     }
 
+    public void setHeader(String name,String value){
+        this.headers.put(name,value);
+    }
+
 }

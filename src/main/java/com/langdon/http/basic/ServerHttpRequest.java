@@ -44,20 +44,22 @@ public class ServerHttpRequest extends AbstractHttpMessage implements HttpReques
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(getMethod())
-                .append((char)Character.SPACE_SEPARATOR)
+                .append(' ')
                 .append(getRequestUri())
-                .append((char)Character.SPACE_SEPARATOR)
+                .append(' ')
                 .append(getHttpVersion())
                 .append((char)Character.LINE_SEPARATOR);
         for (Map.Entry<String ,String > entry : getHeaders().entrySet()){
             sb.append(entry.getKey())
                     .append(": ")
                     .append(entry.getValue())
-                    .append((char)Character.LINE_SEPARATOR)
-                    .append((char)Character.LINE_SEPARATOR);
+                    .append('\r')
+                    .append('\n');
         }
         sb.append((char)Character.LINE_SEPARATOR);
+        if (getEntity()!=null){
+            sb.append(new String(getEntity()));
+        }
         return sb.toString();
-//        return getEntity()==null ? sb.toString() : sb.append(new String(getEntity())).toString();
     }
 }

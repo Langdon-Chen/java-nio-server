@@ -43,7 +43,7 @@ public class Reactor implements Runnable {
     public void run() {
         try{
             while (!Thread.interrupted()){
-                log.info("selector " + selector + " is selecting !");
+
                 if (selector.select() > 0 ){// get the ready socketKeys
                     Set<SelectionKey> selectedKeys = selector.selectedKeys();
                     Iterator<SelectionKey> it = selectedKeys.iterator();
@@ -61,7 +61,7 @@ public class Reactor implements Runnable {
     }
     private void dispatch(SelectionKey k) {
         log.info("selector " + selector + " is dispatching key " + k + " !");
-        Runnable r = (Runnable)(k.attachment()); // 在 Acceptor.handler 处进行 attach
+        Runnable r = (Runnable)(k.attachment());
         if (r != null)
             r.run();
     }

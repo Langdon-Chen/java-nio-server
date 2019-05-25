@@ -28,9 +28,8 @@ public class Handler implements Runnable{
         socketChannel.configureBlocking(false);
         selectionKey = socketChannel.register(s, 0);
         selectionKey.attach(this);
-        selectionKey.interestOps(SelectionKey.OP_READ); // selector 根据 interest 来 selector the ready keys
+        selectionKey.interestOps(SelectionKey.OP_READ);
         messageBuffer = new MessageBuffer();
-        //这里必须先唤醒read_Sel，然后加锁，防止读写线程的中select方法再次锁定
         s.wakeup();
     }
 

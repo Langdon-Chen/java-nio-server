@@ -31,7 +31,6 @@ public enum HttpVersion {
 	}
 	
 	/**
-	 * 提取HTTP version
 	 * 
 	 * @param headerLine HTTP request header line
 	 * @return
